@@ -102,15 +102,17 @@ int main(int argc, char** argv)
 {
 	//加载点云文件
 	PointCloud::Ptr cloud_src_o(new PointCloud);//原点云，待配准
-	//pcl::io::loadPCDFile("room_scan2.pcd", *cloud_src_o);
+	pcl::io::loadPCDFile("room_scan2.pcd", *cloud_src_o);
 	PointCloud::Ptr cloud_tgt_o(new PointCloud);//目标点云
 	pcl::io::loadPCDFile("room_scan1.pcd", *cloud_tgt_o);
 
 	//构造变换矩阵，使目标点云旋转一定的角度成为待配准点云
-	Eigen::AngleAxisf rotation(M_PI / 2.85, Eigen::Vector3f::UnitZ());
+	/*
+	Eigen::AngleAxisf rotation(M_PI/2.85, Eigen::Vector3f::UnitZ());
 	Eigen::Translation3f translation(3.79387, 1.720047, 0);
 	Eigen::Matrix4f T = (translation * rotation).matrix();
 	pcl::transformPointCloud(*cloud_tgt_o, *cloud_src_o, T);
+	*/
 
 	clock_t start = clock();
 
@@ -238,5 +240,6 @@ int main(int argc, char** argv)
 
 	//可视化
 	visualize_pcd(cloud_src_o, cloud_tgt_o, icp_result);
+
 	return (0);
 }
